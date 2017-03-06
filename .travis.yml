@@ -36,7 +36,6 @@ before_install:
 - chmod +x ~/.local/bin/stack
 
 install:
-  - stack --no-terminal install --install-ghc alex
   - make STACK_OPTIONS=--no-terminal deps
 
 script:
