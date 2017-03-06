@@ -17,7 +17,7 @@ js_install_root := $(shell $(stackjs) path --local-install-root)
 hackmsg = { echo "If build failed while installing 'happy', try 'make happy-hack'"; false; }
 
 build-tools:
-	$(stack) build alex happy gtk2hs-buildtools
+	$(stack) build alex happy hscolour gtk2hs-buildtools
 
 happy-hack:
 	PATH=$$(dirname $$(stack exec which ghc)):$$(dirname $$(stack exec which happy)):$$PATH \
