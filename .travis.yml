@@ -24,6 +24,8 @@ addons:
   apt:
     packages:
       - libgmp-dev
+      - libgtk-3-dev
+      - libwebkitgtk-3.0-dev
       - make
 
 before_install:
@@ -34,7 +36,11 @@ before_install:
 - chmod +x ~/.local/bin/stack
 
 install:
-  - make
+  - stack --no-terminal install --install-ghc alex
+  - make STACK_OPTIONS=--no-terminal deps
+
+script:
+  - make STACK_OPTIONS=--no-terminal
 
 # install:
 # # Build dependencies
