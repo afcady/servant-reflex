@@ -16,8 +16,11 @@ language: generic
 
 # Caching so the next build will be fast too.
 cache:
+  timeout: 6000 # minutes
   directories:
   - $HOME/.stack
+  - $HOME/.ghcjs
+  - .stack-work
 
 # Ensure necessary system libraries are present
 addons:
@@ -36,10 +39,12 @@ before_install:
 - chmod +x ~/.local/bin/stack
 
 install:
-  - make STACK_OPTIONS=--no-terminal deps
+  # It is important to timeout before Travis CI kills the process; otherwise,
+  # the cache is not saved and there is no incremental progress.
+  - timeout 32m make STACK_OPTIONS=--no-terminal; echo $? > exit-status.txt
 
 script:
-  - make STACK_OPTIONS=--no-terminal
+  - read s < exit-status.txt && echo exit status = $s && [ $s = 124 -o $s = 0 ]
 
 # install:
 # # Build dependencies
