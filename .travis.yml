@@ -41,7 +41,9 @@ before_install:
 install:
   # It is important to timeout before Travis CI kills the process; otherwise,
   # the cache is not saved and there is no incremental progress.
-  - timeout 32m make STACK_OPTIONS=--no-terminal; echo $? > exit-status.txt
+  # - timeout 32m make STACK_OPTIONS=--no-terminal; echo $? > exit-status.txt
+  # - timeout 32m stack --no-terminal --stack-yaml stack.ghcjs.yaml setup --no-ghcjs-boot-clean --ghcjs-boot-options='--quick'; echo $? > exit-status.txt
+  - timeout 32m stack --no-terminal --stack-yaml stack.ghcjs.yaml setup --no-ghcjs-boot-clean; echo $? > exit-status.txt
 
 script:
   - read s < exit-status.txt && echo exit status = $s && [ $s = 124 -o $s = 0 ]
